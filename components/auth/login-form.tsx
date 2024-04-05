@@ -1,5 +1,6 @@
 'use client'
 
+import { login } from '@/actions/login'
 import CardWrapper from '@/components/auth/card-wrapper'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
@@ -8,13 +9,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { LoginSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
 interface LoginFormProps {}
 
 const LoginForm: FunctionComponent<LoginFormProps> = () => {
+  const [error, setError] = useState<string>()
+  const [success, setSuccess] = useState<string>()
+  const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -24,7 +28,19 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
   })
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log(values)
+    setError(undefined)
+    setSuccess(undefined)
+    // login(values); web server 로 요청해서 db 직접 붙던가
+    // 또는 axios.post("/login", values) 로 api 쏘던가.
+    startTransition(async () => {
+      console.log(1)
+      const data = await login(values)
+      console.log(2)
+      setError(data.error)
+      console.log(3)
+      setSuccess(data.success)
+      console.log(4)
+    })
   }
 
   return (
@@ -44,7 +60,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} type="email" placeholder="red@wonseok.me" />
+                    <Input {...field} disabled={isPending} type="email" placeholder="red@wonseok.me" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -57,16 +73,16 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" placeholder="********" />
+                    <Input {...field} disabled={isPending} type="password" placeholder="********" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <FormError message="" />
-          <FormSuccess message="" />
-          <Button type="submit" className="w-full">
+          <FormError message={error} />
+          <FormSuccess message={success} />
+          <Button type="submit" disabled={isPending} className="w-full">
             Login
           </Button>
         </form>
