@@ -33,9 +33,13 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
     // login(values); web server 로 요청해서 db 직접 붙던가
     // 또는 axios.post("/login", values) 로 api 쏘던가.
     startTransition(async () => {
-      const data = await login(values)
-      setError(data.error)
-      setSuccess(data.success)
+      try {
+        const data = await login(values)
+        setError(data.error)
+        setSuccess(data.success)
+      } catch (error) {
+        setError('Something went wrong')
+      }
     })
   }
 
