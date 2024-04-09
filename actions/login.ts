@@ -9,7 +9,7 @@ import { LoginSchema } from '@/schemas'
 import { AuthError } from 'next-auth'
 import * as z from 'zod'
 
-export const login = async (values: z.infer<typeof LoginSchema>): Promise<{ error?: string; success?: string }> => {
+export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values)
   if (!validatedFields.success) {
     return { error: 'Invalid fields!' }
@@ -32,7 +32,7 @@ export const login = async (values: z.infer<typeof LoginSchema>): Promise<{ erro
   }
 
   try {
-    return signIn('credentials', {
+    await signIn('credentials', {
       email,
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,

@@ -40,8 +40,8 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
     startTransition(async () => {
       try {
         const data = await login(values)
-        setError(data.error)
-        setSuccess(data.success)
+        setError(data?.error)
+        setSuccess(data?.success)
       } catch (error) {
         setError('Something went wrong')
       }
@@ -85,7 +85,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
               )}
             />
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error ?? urlError} />
           <FormSuccess message={success} />
           <Button type="submit" disabled={isPending} className="w-full">
             Login
