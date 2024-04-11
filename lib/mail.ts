@@ -4,6 +4,10 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const resetLink = `http://localhost:3000/auth/new-password?token=${token}`
+  if (process.env.RESEND_ENABLED !== 'true') {
+    console.log('reset', resetLink)
+    return
+  }
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
@@ -20,7 +24,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`
   if (process.env.RESEND_ENABLED !== 'true') {
-    console.log(confirmLink)
+    console.log('veri', confirmLink)
     return
   }
 
