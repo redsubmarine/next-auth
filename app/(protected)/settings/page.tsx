@@ -1,20 +1,24 @@
-import { auth, signOut } from '@/auth'
+'use client'
+
+import { logout } from '@/actions/logout'
+import { useSession } from 'next-auth/react'
 import { FunctionComponent } from 'react'
 
 interface SettingsProps {}
 
-const Settings: FunctionComponent<SettingsProps> = async () => {
-  const session = await auth()
+const Settings: FunctionComponent<SettingsProps> = () => {
+  const session = useSession()
+
+  const onClick = () => {
+    logout()
+  }
   return (
     <div>
       {JSON.stringify(session)}
-      <form
-        action={async () => {
-          'use server'
-          await signOut()
-        }}
-      >
-        <button type="submit">Sign out</button>
+      <form>
+        <button onClick={onClick} type="submit">
+          Sign out
+        </button>
       </form>
     </div>
   )
