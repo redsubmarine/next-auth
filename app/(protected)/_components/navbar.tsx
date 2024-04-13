@@ -1,9 +1,10 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FunctionComponent } from 'react'
+
+import { Button } from '@/components/ui/button'
 
 interface NavbarProps {}
 
