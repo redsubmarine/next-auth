@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FunctionComponent } from 'react'
 
+import UserButton from '@/components/auth/user-button'
 import { Button } from '@/components/ui/button'
 
 interface NavbarProps {}
@@ -27,7 +28,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           <Link href="/settings">Settings</Link>
         </Button>
       </div>
-      <p>User Button</p>
+      <UserButton />
     </nav>
   )
 }
