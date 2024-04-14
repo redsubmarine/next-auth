@@ -1,9 +1,10 @@
 import { UserRole } from '@prisma/client'
-import NextAuth, { type DefaultSession } from 'next-auth'
+import { type DefaultSession } from 'next-auth'
 
 export type ExtendedUser = DefaultSession['user'] & {
   role: UserRole
   // TODO: 토큰에 커스텀 필드 추가.
+  isTwoFactorEnabled: boolean
 }
 
 declare module 'next-auth' {
