@@ -5,13 +5,14 @@ import authConfig from '@/auth.config'
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation'
 import { getUserById } from '@/data/user'
 import { db } from '@/lib/db'
-import { getAccountByUserId } from './data/account'
+import { getAccountByUserId } from '@/data/account'
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
+  unstable_update: update,
 } = NextAuth({
   pages: {
     signIn: '/auth/login',
