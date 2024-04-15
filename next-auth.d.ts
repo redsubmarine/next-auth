@@ -5,6 +5,7 @@ export type ExtendedUser = DefaultSession['user'] & {
   role: UserRole
   // TODO: 토큰에 커스텀 필드 추가.
   isTwoFactorEnabled: boolean
+  isOAuth: boolean
 }
 
 declare module 'next-auth' {
