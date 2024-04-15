@@ -29,6 +29,9 @@ const SettingsPage: FunctionComponent<SettingsProps> = () => {
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
       name: user?.name ?? undefined,
+      email: user?.email ?? undefined,
+      password: undefined,
+      newPassword: undefined,
     },
   })
 
@@ -64,6 +67,42 @@ const SettingsPage: FunctionComponent<SettingsProps> = () => {
                     <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="홍길동" disabled={isPending} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="email" placeholder="red@wonseok.me" disabled={isPending} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="password" placeholder="******" disabled={isPending} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="password" placeholder="******" disabled={isPending} />
                     </FormControl>
                   </FormItem>
                 )}
