@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { UserRole } from '@prisma/client'
 import { FunctionComponent } from 'react'
+import { toast } from 'sonner'
 
 interface AdminPageProps {}
 
@@ -13,9 +14,9 @@ const AdminPage: FunctionComponent<AdminPageProps> = () => {
   const onApiRouteClick = () => {
     fetch('/api/admin').then((response) => {
       if (response.ok) {
-        console.log('OKAY')
+        toast.success('Allowed API Routed!')
       } else {
-        console.error('FORBIDDEN!')
+        toast.error('Forbidden API Routed!')
       }
     })
   }
