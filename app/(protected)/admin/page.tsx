@@ -1,5 +1,6 @@
 'use client'
 
+import { admin } from '@/actions/admin'
 import RoleGate from '@/components/auth/role-gate'
 import FormSuccess from '@/components/form-success'
 import { Button } from '@/components/ui/button'
@@ -11,6 +12,17 @@ import { toast } from 'sonner'
 interface AdminPageProps {}
 
 const AdminPage: FunctionComponent<AdminPageProps> = () => {
+  const onServerActionClick = () => {
+    admin().then((data) => {
+      if (data.error) {
+        toast.error(data.error)
+      }
+      if (data.success) {
+        toast.success(data.success)
+      }
+    })
+  }
+
   const onApiRouteClick = () => {
     fetch('/api/admin').then((response) => {
       if (response.ok) {
@@ -42,7 +54,7 @@ rounded-lg border p-3 shadow-md"
 rounded-lg border p-3 shadow-md"
         >
           <p className="text-sm font-medium">Admin-only Server Action</p>
-          <Button>Click to test</Button>
+          <Button onClick={onServerActionClick}>Click to test</Button>
         </div>
       </CardContent>
     </Card>
