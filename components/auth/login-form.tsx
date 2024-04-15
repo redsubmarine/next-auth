@@ -9,16 +9,17 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { LoginSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { FunctionComponent, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 
 interface LoginFormProps {}
 
 const LoginForm: FunctionComponent<LoginFormProps> = () => {
   const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl')
   const urlError =
     searchParams.get('error') === 'OAuthAccountNotLinked' ? 'Email already in use with different provider!' : ''
 
@@ -41,7 +42,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
     // 또는 axios.post("/login", values) 로 api 쏘던가.
     startTransition(async () => {
       try {
-        const data = await login(values)
+        const data = await login(values, callbackUrl)
         if (data?.error) {
           form.reset()
           setError(data?.error)

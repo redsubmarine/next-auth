@@ -3,6 +3,9 @@
 import { useRouter } from 'next/navigation'
 import { FunctionComponent } from 'react'
 
+import LoginForm from '@/components/auth/login-form'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+
 interface LoginButtonProps {
   children: React.ReactNode
   mode?: 'modal' | 'redirect'
@@ -16,7 +19,14 @@ const LoginButton: FunctionComponent<LoginButtonProps> = ({ children, mode = 're
     router.push('/auth/login')
   }
   if (mode === 'modal') {
-    return <span>TODO: NOT Implemented modal</span>
+    return (
+      <Dialog>
+        <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+        <DialogContent className="p-0 w-auto bg-transparent border-none">
+          <LoginForm />
+        </DialogContent>
+      </Dialog>
+    )
   }
   return (
     <span onClick={onClick} className="cursor-pointer">
